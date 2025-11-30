@@ -34,7 +34,18 @@ jobs:
         run: npm run build
 
       - name: List build output
-        run: ls -la dist/
+        run: |
+          echo "Build output files:"
+          ls -la dist/
+          echo ""
+          echo "Checking for index.html:"
+          if [ -f "dist/index.html" ]; then
+            echo "✓ index.html exists"
+            head -20 dist/index.html
+          else
+            echo "✗ index.html NOT FOUND"
+            exit 1
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
